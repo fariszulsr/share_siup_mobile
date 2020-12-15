@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'AdminPage.dart';
+import 'home/HomePage.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 void main() {
   runApp(MyApp());
 }
 
+String username='';
+
 class MyApp extends StatelessWidget {
   @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     title: 'Login',
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.black),
+  //     home: Login(),
+  //   );
+  // }
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Login',
+    return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.black),
-      home: Login(),
+      title: 'Login PHP My Admin',
+      home: new Login(),
+      routes: <String,WidgetBuilder>{
+        '/AdminPage': (BuildContext context)=> new AdminPage(username: username,),
+        '/HomePage': (BuildContext context)=> new homePage(username: username,),
+        '/MyHomePage': (BuildContext context)=> new Login(),
+      },
     );
   }
 }
@@ -22,110 +43,133 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController user=new TextEditingController();
+  TextEditingController pass=new TextEditingController();
+  TextEditingController encode=new TextEditingController();
+
+  String msg='';
+
+  Future<List> _login() async {
+    // List<int> message = utf8.encode(pass.text);
+    // List<int> key = utf8.encode("O4ANlHJXXuqhS1nivZMXvMHF3bfIhLNahMFhb8FX1nLhAOoXHq3ipauyryGavSei3Fc0InQ89dmFhcFdByoUE97RwfespJWCnT2GswLXF2Nosqo0xgQKh6LAAsqyx9z1bmMd37CbPMmQXk239dKAXmDpYtf7Gjlsv9IhHvkeFhmoaqtE7snraaIjqK2T73grN7ICYIMV3dlSJi05ltz6QUzLGcjA3C4wrJRUyeMHVzbrINrAzCh781qQ6q7R6Q6");
+    // var hmac = new Hmac(sha512, key);
+    // var encodePassword = hmac.convert(message);
+
+    final response = await http.post("http://10.0.2.2/flutter_siup/login.php", body: {
+      "username": user.text,
+      "password": pass.text,
+    });
+
+    var datauser = json.decode(response.body);
+
+    if(datauser.length==0){
+      setState(() {
+        msg="Username atau Password salah";
+      });
+    }else{
+      if(datauser!=null){
+        Navigator.pushReplacementNamed(context, '/HomePage');
+      }
+      // else if(datauser[0]['level']=='member'){
+      //   Navigator.pushReplacementNamed(context, '/MemberPage');
+      // }
+
+      setState(() {
+        username= datauser[0]['username'];
+      });
+
+    }
+
+    return datauser;
+  }
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(centerTitle: true, title: Text("SIUP Parents"),),
       body: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(8),
-        color: Colors.white,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: Image.asset('image/logosiup.png'),
-              margin: const EdgeInsets.only(top: 20.0),
-              //   width: 100,
-              //   height: 100,
-              //   decoration:
-              //       BoxDecoration(color: Colors.black87, shape: BoxShape.circle),
-              //   child: Center(
-              //     child: Icon(
-              //       Icons.person,
-              //       size: 50,
-              //       color: Colors.white,
-              //     ),
+        child: Center(
+          child: Column(
+            children: <Widget>[
+
+              Container(
+                child: Image.asset('image/logosiup.png'),
+                margin: const EdgeInsets.only(top: 20.0),
+              ),
+
+              SizedBox(
+                height: 5,
+              ),
+
+              // Text("Username",style: TextStyle(fontSize: 18.0),),
+
+              TextField(
+                controller: user,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                    icon: Icon(Icons.email, color: Colors.black),
+                    hintText: 'Username'
+                ),
+              ),
+
+              // Text("Password",style: TextStyle(fontSize: 18.0),),
+              TextField(
+                controller: pass,
+                obscureText: true,
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                    icon: Icon(Icons.lock, color: Colors.black),
+                    hintText: 'Password'
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              ButtonTheme(
+                minWidth: 350.0,
+                child: RaisedButton(
+                  child: Text("Login",
+                      style: TextStyle(fontSize: 15, color: Colors.white)),
+                  onPressed: (){
+                    _login();
+                  },
+                ),
+              ),
+
+              SizedBox(
+                height: 10,
+              ),
+
+              // Visibility(
+              //   visible: false,
+              //   child: TextFormField(
+              //       initialValue: "LastNamePlaceholder",
+              //       validator: (val) {
+              //         return val.isEmpty ? S.of(context).lastNameIsRequired : null;
+              //       },
+              //       decoration: InputDecoration(labelText: S.of(context).lastName),
+              //       onSaved: (String value) {
+              //         address.lastName = value;
+              //       }),
+              // )
+
+              // ButtonTheme(
+              //   child: RaisedButton(
+              //     child: Text("FORGOT USERNAME/PASSWORD?",
+              //       style: TextStyle(fontSize: 15, color: Colors.white)),
+              //     onPressed: (){
+              //       _login();
+              //     },
               //   ),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            // Text(
-            //   "Selamat Datang, Silahkan Masuk",
-            //   style: TextStyle(fontSize: 20, color: Colors.black87),
-            // ),
-            TextFormField(
-              decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black87)),
-                  prefixIcon: Icon(
-                    Icons.person,
-                    size: 40,
-                  ),
-                  hintText: "Username",
-                  hintStyle: TextStyle(color: Colors.black87),
-                  labelText: "Username",
-                  labelStyle: TextStyle(color: Colors.black87)),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            TextFormField(
-              obscureText: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black87)),
-                prefixIcon: Icon(
-                  Icons.lock,
-                  size: 40,
-                ),
-                hintText: "Password",
-                hintStyle: TextStyle(color: Colors.black87),
-                labelText: "Password",
-                labelStyle: TextStyle(color: Colors.black87),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Card(
-              color: Colors.lightBlue,
-              elevation: 5,
-              child: Container(
-                height: 50,
-                child: InkWell(
-                  splashColor: Colors.white,
-                  onTap: () {},
-                  child: Center(
-                    child: Text("Login",
-                        style: TextStyle(fontSize: 20, color: Colors.white)),
-                  ),
-                ),
-              ),
-            ),
+              // ),
 
-            SizedBox(
-              height: 50,
-            ),
+              Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),)
 
-            Card(
-              color: Colors.grey[200],
-              elevation: 5,
-              child: Container(
-                height: 20,
-                child: InkWell(
-                  splashColor: Colors.lightBlue,
-                  onTap: () {},
-                  child: Center(
-                    child: Text("FORGOT USERNAME/PASSWORD?",
-                        style: TextStyle(fontSize: 15, color: Colors.black)),
-                  ),
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
