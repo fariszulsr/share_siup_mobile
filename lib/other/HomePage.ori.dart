@@ -1,10 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:siup/home/exdash.dart';
 import '../home/GridHomePage.dart';
 import 'package:siup/dashboard/dashboard.dart';
 
+// void main() => runApp(MaterialApp(home: Home()));
+
+void main() {
+  runApp(HomePageOri());
+}
+
 String username='';
+
+class HomePageOri extends StatelessWidget {
+  @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     title: 'Login',
+  //     debugShowCheckedModeBanner: false,
+  //     theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.black),
+  //     home: Login(),
+  //   );
+  // }
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Home Page',
+      home: new homePage(),
+      routes: <String,WidgetBuilder>{
+        // '/AdminPage': (BuildContext context)=> new AdminPage(username: username,),
+        // '/HomePage': (BuildContext context)=> new MemberPage(username: username,),
+        // '/MyHomePage': (BuildContext context)=> new Login(),
+      },
+    );
+  }
+}
 
 class homePage extends StatefulWidget {
 
@@ -73,6 +102,7 @@ class _HomePageState extends State<homePage> {
                           //         this._currentItemSelected = newValueSelected as List<String>;
                           //       });
                           //   }),
+
                         ],
                       ),
 
@@ -80,7 +110,6 @@ class _HomePageState extends State<homePage> {
                         child: Text("Log OUt"),
                         onPressed: (){
                           Navigator.pushReplacementNamed(context,'/Login');
-                          print('logout');
                         },
                       ),
 
@@ -94,13 +123,11 @@ class _HomePageState extends State<homePage> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 40,
             ),
             GridHomePage()
-            // exDash()
           ],
         ),
       );
     }
   }
-

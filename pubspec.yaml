@@ -1,4 +1,4 @@
-name: siup_parents
+name: siup
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -23,6 +23,9 @@ environment:
 dependencies:
   google_fonts: ^0.2.0
   crypto: ^2.1.5
+  dropdownfield: ^1.0.3
+  data_tables: ^1.0.3
+  horizontal_data_table: ^1.0.6+2
   flutter:
     sdk: flutter
 

@@ -3,29 +3,40 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:siup/home/exdash.dart';
 import '../home/GridHomePage.dart';
 import 'package:siup/dashboard/dashboard.dart';
+import 'package:siup/schedule/GridSchedulePage.dart';
+import 'package:siup/home/HomePage.dart';
+import 'package:dropdownfield/dropdownfield.dart';
 
 String username='';
 
-class homePage extends StatefulWidget {
+class schedulePage extends StatefulWidget {
 
   final String username;
-  homePage({this.username});
+  schedulePage({this.username});
   @override
-  _HomePageState createState() => _HomePageState(username);
+  _SchedulePageState createState() => _SchedulePageState(username);
 }
 
-class _HomePageState extends State<homePage> {
+class _SchedulePageState extends State<schedulePage> {
 
   final String username;
-  _HomePageState(this.username);
+  _SchedulePageState(this.username);
   var _currencies = ['Profil', 'Log out'];
   var _currentItemSelected = ['Profil'];
 
     @override
     Widget build(BuildContext context) {
 
-      return Scaffold(
+      return new WillPopScope(
+        onWillPop: (){
+          Navigator.pushReplacement(context,
+            new MaterialPageRoute(builder: (context) => homePage(username: username,))
+          );
+        },
+
+      child: Scaffold(
         backgroundColor: Colors.white,
+
         body: Column(
           children: <Widget>[
             SizedBox(
@@ -96,10 +107,13 @@ class _HomePageState extends State<homePage> {
             SizedBox(
               height: 10,
             ),
-            GridHomePage()
+            Text('Kalender Akademik dan Jadwal Kuliah', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey, fontSize: 20),),
+
+            GridSchedulePage()
             // exDash()
           ],
         ),
+      ),
       );
     }
   }

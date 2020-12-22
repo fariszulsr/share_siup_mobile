@@ -16,7 +16,7 @@ class AdminPage extends StatelessWidget {
           RaisedButton(
             child: Text("Log OUt"),
             onPressed: (){
-              Navigator.pushReplacementNamed(context,'/MyHomePage');
+              Navigator.pushReplacementNamed(context,'/Login');
             },
           ),
         ],

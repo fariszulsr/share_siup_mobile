@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:siup/dashboard/dashboard.dart';
+import 'package:siup/home/HomePage.dart';
+import 'package:siup/home/GridHomePage.dart';
+// import 'package:siup/other/menu_dashboard.dart';
 import 'AdminPage.dart';
-import 'home/HomePage.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
+import 'package:siup/other/menu_dashboard.dart';
+import 'package:siup/schedule/SchedulePage.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,12 +31,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Login PHP My Admin',
+      title: 'Login',
       home: new Login(),
       routes: <String,WidgetBuilder>{
-        '/AdminPage': (BuildContext context)=> new AdminPage(username: username,),
+        '/SchedulePage': (BuildContext context)=> new schedulePage(username: username,),
         '/HomePage': (BuildContext context)=> new homePage(username: username,),
-        '/MyHomePage': (BuildContext context)=> new Login(),
+        '/Login': (BuildContext context)=> new Login(),
+        '/menudash' : (BuildContext context)=> new MenuDashboardPage(),
       },
     );
   }
@@ -69,6 +75,7 @@ class _LoginState extends State<Login> {
     }else{
       if(datauser!=null){
         Navigator.pushReplacementNamed(context, '/HomePage');
+        print("homepage");
       }
       // else if(datauser[0]['level']=='member'){
       //   Navigator.pushReplacementNamed(context, '/MemberPage');
