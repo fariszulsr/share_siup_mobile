@@ -272,6 +272,5 @@ class _gridSchedulePage extends State<GridSchedulePage> with TickerProviderState
         ),
       ),
     );
-    // );
   }
 }

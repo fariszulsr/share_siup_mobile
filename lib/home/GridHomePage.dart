@@ -85,7 +85,7 @@ class _gridHomePage extends State {
                       Navigator.pushReplacementNamed(context, '/SchedulePage');
                     }
                     else if (data.id == 2){
-                      Navigator.pushReplacementNamed(context, '/SchedulePage');
+                      Navigator.pushReplacementNamed(context, '/Notifications');
                     }
                     print("tap");
                   },
@@ -97,18 +97,20 @@ class _gridHomePage extends State {
                   children: <Widget>[
                     Image.asset(
                       data.img,
-                      width: 42,
+                      width: 85,
                     ),
                     SizedBox(
                       height: 14,
                     ),
                     Text(
                       data.title,
-                      style: GoogleFonts.openSans(
+                      style: GoogleFonts.baloo(
                         textStyle: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600)),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: 1.0,
+                        )),
                     ),
                     SizedBox(
                       height: 8,

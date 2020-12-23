@@ -55,58 +55,49 @@ class _SchedulePageState extends State<schedulePage> {
                         height: 4,
                       ),
 
-                      Text('Orang tua dari : ', style: TextStyle(fontSize: 18.0),),
+                      // Text('Orang tua dari : ', style: TextStyle(fontSize: 18.0),),
 
                       Row(
                         children: <Widget>[
-                          Text('$username', style: TextStyle(fontSize: 18.0),),
-                          // DropdownButton<String>(
-                          //   iconSize: 30,
-                          //   items: <String>['Profil', 'Log out'].map((String value) {
-                          //     return new DropdownMenuItem<String>(
-                          //       value: value,
-                          //       child: new Text(value),
-                          //     );
-                          //   }).toList(),
-                          //   onChanged: (value) {},
-                          // ),
-
-                          // DropdownButton<String>(
-                          //   iconSize: 30,
-                          //   items: _currencies.map((String dropDownStringItem){
-                          //           return DropdownMenuItem<String>(
-                          //             value: dropDownStringItem,
-                          //             child: Text(dropDownStringItem),
-                          //           );
-                          //   }).toList(),
-                          //   onChanged: (String newValueSelected){
-                          //       setState(() {
-                          //         this._currentItemSelected = newValueSelected as List<String>;
-                          //       });
-                          //   }),
+                          // Text('$username', style: TextStyle(fontSize: 18.0),),
+                          Container(
+                            child: Image.asset('image/logosiup.png', width: 80, height: 80),
+                          ),
                         ],
                       ),
 
-                      RaisedButton(
-                        child: Text("Log OUt"),
-                        onPressed: (){
-                          Navigator.pushReplacementNamed(context,'/Login');
-                          print('logout');
-                        },
-                      ),
+                      // RaisedButton(
+                      //   child: Text("Log OUt"),
+                      //   onPressed: (){
+                      //     Navigator.pushReplacementNamed(context,'/Login');
+                      //     print('logout');
+                      //   },
+                      // ),
 
                     ],
                   ),
 
-                  Container(
-                    child: Image.asset('image/logosiup.png', width: 115, height: 115),
+                  Positioned(
+                    right: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: IconButton(
+                        icon: Icon(Icons.circle_notifications),
+                        iconSize: 40.0,
+                        color: Colors.amber,
+                        onPressed: (){
+                          Navigator.pushReplacementNamed(context, '/Notifications');
+                        },
+                      ),
+                    ),
                   ),
+
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Text('Kalender Akademik dan Jadwal Kuliah', textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueGrey, fontSize: 20),),
 
             GridSchedulePage()

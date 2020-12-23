@@ -3,23 +3,45 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:siup/home/exdash.dart';
 import '../home/GridHomePage.dart';
 import 'package:siup/dashboard/dashboard.dart';
+import 'package:siup/config/config.dart';
 
 String username='';
 
 class homePage extends StatefulWidget {
-
+  // final String results;
   final String username;
   homePage({this.username});
   @override
-  _HomePageState createState() => _HomePageState(username);
+  _HomePageState createState() => _HomePageState(username: username);
 }
 
 class _HomePageState extends State<homePage> {
 
   final String username;
-  _HomePageState(this.username);
+  // final List<String> results;
+  _HomePageState({this.username});
   var _currencies = ['Profil', 'Log out'];
   var _currentItemSelected = ['Profil'];
+
+  int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+      style: optionStyle,
+    ),
+    Text(
+      'Index 2: Account',
+      style: optionStyle,
+    ),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
     @override
     Widget build(BuildContext context) {
@@ -44,61 +66,67 @@ class _HomePageState extends State<homePage> {
                         height: 4,
                       ),
 
-                      Text('Orang tua dari : ', style: TextStyle(fontSize: 18.0),),
+                      // Text('Orang tua dari : ', style: TextStyle(fontSize: 18.0),),
 
                       Row(
                         children: <Widget>[
-                          Text('$username', style: TextStyle(fontSize: 18.0),),
-                          // DropdownButton<String>(
-                          //   iconSize: 30,
-                          //   items: <String>['Profil', 'Log out'].map((String value) {
-                          //     return new DropdownMenuItem<String>(
-                          //       value: value,
-                          //       child: new Text(value),
-                          //     );
-                          //   }).toList(),
-                          //   onChanged: (value) {},
-                          // ),
+                      //     Text('$username', style: TextStyle(fontSize: 18.0),),
 
-                          // DropdownButton<String>(
-                          //   iconSize: 30,
-                          //   items: _currencies.map((String dropDownStringItem){
-                          //           return DropdownMenuItem<String>(
-                          //             value: dropDownStringItem,
-                          //             child: Text(dropDownStringItem),
-                          //           );
-                          //   }).toList(),
-                          //   onChanged: (String newValueSelected){
-                          //       setState(() {
-                          //         this._currentItemSelected = newValueSelected as List<String>;
-                          //       });
-                          //   }),
+                          Container(
+                            child: Image.asset('image/logosiup.png', width: 80, height: 80),
+                          ),
                         ],
                       ),
 
-                      RaisedButton(
-                        child: Text("Log OUt"),
-                        onPressed: (){
-                          Navigator.pushReplacementNamed(context,'/Login');
-                          print('logout');
-                        },
-                      ),
+                      // RaisedButton(
+                      //   child: Text("Log OUt"),
+                      //   onPressed: (){
+                      //     // Navigator.pushReplacementNamed(context,'/Login');
+                      //     print('homepage');
+                      //   },
+                      // ),
 
                     ],
                   ),
-
-                  Container(
-                    child: Image.asset('image/logosiup.png', width: 115, height: 115),
+                  Positioned(
+                    right: 0.0,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 5),
+                      child: IconButton(
+                        icon: Icon(Icons.circle_notifications),
+                        iconSize: 40.0,
+                        color: Colors.amber,
+                        onPressed: (){
+                          Navigator.pushReplacementNamed(context, '/Notifications');
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
             GridHomePage()
-            // exDash()
           ],
+        ),
+        bottomNavigationBar: new Theme(data: Theme.of(context).copyWith(
+          canvasColor: Colors.white,
+          primaryColor: Colors.black,
+        ), child: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Account',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.amber,
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+          ),
         ),
       );
     }

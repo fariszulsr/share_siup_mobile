@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:siup/dashboard/dashboard.dart';
 import 'package:siup/home/HomePage.dart';
-import 'package:siup/home/GridHomePage.dart';
-// import 'package:siup/other/menu_dashboard.dart';
-import 'AdminPage.dart';
 import 'package:crypto/crypto.dart';
-import 'dart:convert';
 import 'package:siup/other/menu_dashboard.dart';
 import 'package:siup/schedule/SchedulePage.dart';
+import 'package:siup/notification/notifications.dart';
+// import 'package:format_indonesia/format_indonesia.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,6 +16,8 @@ void main() {
 String username='';
 
 class MyApp extends StatelessWidget {
+  // get results => results;
+
   @override
   // Widget build(BuildContext context) {
   //   return MaterialApp(
@@ -35,9 +34,10 @@ class MyApp extends StatelessWidget {
       home: new Login(),
       routes: <String,WidgetBuilder>{
         '/SchedulePage': (BuildContext context)=> new schedulePage(username: username,),
-        '/HomePage': (BuildContext context)=> new homePage(username: username,),
+        '/HomePage': (BuildContext context)=> new homePage(username: username),
         '/Login': (BuildContext context)=> new Login(),
         '/menudash' : (BuildContext context)=> new MenuDashboardPage(),
+        '/Notifications' : (BuildContext context)=> new Notifications(username: username,),
       },
     );
   }
@@ -52,19 +52,29 @@ class _LoginState extends State<Login> {
   TextEditingController user=new TextEditingController();
   TextEditingController pass=new TextEditingController();
   TextEditingController encode=new TextEditingController();
+  // TextEditingController results=new TextEditingController();
 
   String msg='';
 
+  // get connect => connect;
+
   Future<List> _login() async {
-    // List<int> message = utf8.encode(pass.text);
-    // List<int> key = utf8.encode("O4ANlHJXXuqhS1nivZMXvMHF3bfIhLNahMFhb8FX1nLhAOoXHq3ipauyryGavSei3Fc0InQ89dmFhcFdByoUE97RwfespJWCnT2GswLXF2Nosqo0xgQKh6LAAsqyx9z1bmMd37CbPMmQXk239dKAXmDpYtf7Gjlsv9IhHvkeFhmoaqtE7snraaIjqK2T73grN7ICYIMV3dlSJi05ltz6QUzLGcjA3C4wrJRUyeMHVzbrINrAzCh781qQ6q7R6Q6");
-    // var hmac = new Hmac(sha512, key);
-    // var encodePassword = hmac.convert(message);
+    List<int> message = utf8.encode(pass.text);
+    List<int> key = utf8.encode("O4ANlHJXXuqhS1nivZMXvMHF3bfIhLNahMFhb8FX1nLhAOoXHq3ipauyryGavSei3Fc0InQ89dmFhcFdByoUE97RwfespJWCnT2GswLXF2Nosqo0xgQKh6LAAsqyx9z1bmMd37CbPMmQXk239dKAXmDpYtf7Gjlsv9IhHvkeFhmoaqtE7snraaIjqK2T73grN7ICYIMV3dlSJi05ltz6QUzLGcjA3C4wrJRUyeMHVzbrINrAzCh781qQ6q7R6Q6");
+    var hmac = new Hmac(sha512, key);
+    var encodePassword = hmac.convert(message);
 
     final response = await http.post("http://10.0.2.2/flutter_siup/login.php", body: {
       "username": user.text,
-      "password": pass.text,
+      "password": encodePassword.toString(),
     });
+
+    // final getSalt = await http.get("http://10.0.2.2/flutter_siup/getSalt.php");
+    // var salt = json.encode(getSalt);
+
+    // final response = await connect.query("SELECT salt FROM tmst_pengguna WHERE id = 8080");
+    // var test = json.decode(response);
+    // print(salt);
 
     var datauser = json.decode(response.body);
 
@@ -142,6 +152,7 @@ class _LoginState extends State<Login> {
                       style: TextStyle(fontSize: 15, color: Colors.white)),
                   onPressed: (){
                     _login();
+                    print('salt');
                   },
                 ),
               ),
