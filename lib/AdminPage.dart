@@ -11,7 +11,7 @@ class AdminPage extends StatelessWidget {
       appBar: AppBar(centerTitle: true, title: Text("Welcome Admin"),),
       body: Column(
         children: <Widget>[
-          Text('Hallo $username', style: TextStyle(fontSize: 20.0),),
+          Text('Hello $username', style: TextStyle(fontSize: 20.0),),
 
           RaisedButton(
             child: Text("Log OUt"),
