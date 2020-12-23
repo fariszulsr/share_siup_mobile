@@ -121,32 +121,82 @@ class _LoginState extends State<Login> {
 
               // Text("Username",style: TextStyle(fontSize: 18.0),),
 
-              TextField(
-                controller: user,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                    icon: Icon(Icons.email, color: Colors.black),
-                    hintText: 'Username'
-                ),
-              ),
+              // Container(
+              //   width: 300.0,
+              //   child: TextField(
+              //       controller: user,
+              //       textAlign: TextAlign.center,
+              //       decoration: InputDecoration(
+              //           border: new OutlineInputBorder(
+              //               borderSide: new BorderSide(color: Colors.teal)),
+              //           // icon: Icon(Icons.email, color: Colors.black, size: 60,),
+              //           hintText: 'Username'
+              //       ),
+              //     ),
+              // ),
 
-              // Text("Password",style: TextStyle(fontSize: 18.0),),
-              TextField(
-                controller: pass,
-                obscureText: true,
-                textAlign: TextAlign.center,
-                decoration: InputDecoration(
-                    icon: Icon(Icons.lock, color: Colors.black),
-                    hintText: 'Password'
+              Container(
+                width: 300,
+                child: TextFormField(
+                  controller: user,
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: false,
+                  textAlign: TextAlign.center,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.email, color: Colors.black, size: 30),
+                    hintText: 'Username',
+                    contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  ),
                 ),
               ),
 
               SizedBox(
-                height: 10,
+                height: 8,
+              ),
+              // Text("Password",style: TextStyle(fontSize: 18.0),),
+              // Container(
+              //   width: 300.0,
+              //   child: TextField(
+              //     controller: pass,
+              //     obscureText: true,
+              //     textAlign: TextAlign.center,
+              //     decoration: InputDecoration(
+              //         border: new OutlineInputBorder(
+              //             borderSide: new BorderSide(color: Colors.teal)),
+              //         // icon: Icon(Icons.lock, color: Colors.black, size: 60),
+              //         hintText: 'Password'
+              //     ),
+              //   ),
+              // ),
+
+              Container(
+                width: 300,
+                child: TextFormField(
+                  controller: pass,
+                  // keyboardType: TextInputType.emailAddress,
+                  autofocus: false,
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+                  // initialValue: 'sathyabaman@gmail.com',
+                  style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.lock, color: Colors.black, size: 30),
+                    hintText: 'Password',
+                    contentPadding: new EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 20,
               ),
 
               ButtonTheme(
-                minWidth: 350.0,
+                minWidth: 150.0,
                 child: RaisedButton(
                   child: Text("Login",
                       style: TextStyle(fontSize: 15, color: Colors.white)),
@@ -183,6 +233,17 @@ class _LoginState extends State<Login> {
               //     },
               //   ),
               // ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: InkWell(
+                  child: Text("FORGOT USERNAME/PASSWORD?",
+                      style: TextStyle(fontSize: 15, color: Colors.black)),
+                  onTap: (){
+                    _login();
+                  },
+                ),
+              ),
+
 
               Text(msg,style: TextStyle(fontSize: 20.0,color: Colors.red),)
 
