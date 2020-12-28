@@ -6,18 +6,18 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 String username = '';
 
-class Notifications extends StatefulWidget {
+class GridPresensiPage extends StatefulWidget {
 
   final String username;
-  Notifications({this.username});
+  GridPresensiPage({this.username});
   @override
-  _notifications createState() => _notifications(username);
+  _gridPresensiPage createState() => _gridPresensiPage(username);
 }
 
-class _notifications extends State<Notifications> with TickerProviderStateMixin {
+class _gridPresensiPage extends State<GridPresensiPage> with TickerProviderStateMixin {
   final String username;
 
-  _notifications(this.username);
+  _gridPresensiPage(this.username);
 
   final List<String> entries = <String>[
     'Masa Perkuliahan Semester Ganjil',
@@ -101,36 +101,17 @@ class _notifications extends State<Notifications> with TickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
 
-    return new WillPopScope(
-        onWillPop: (){
-          Navigator.pushReplacement(context,
-              new MaterialPageRoute(builder: (context) => homePage(username: username,))
-          );
-        },
-
-    child: Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title:Text("Notifikasi", style: TextStyle(color: Colors.blue),),
-        backgroundColor: Colors.white,
-        leading: GestureDetector(
-          onTap: (){
-            Navigator.pushReplacementNamed(context, '/HomePage');
-          },
-          child: Icon(Icons.arrow_back_ios, color: Colors.blue,),
-        ),
-      ),
-      body:
-      GroupedListView(
-        elements: _data,
-        groupBy: (item) => item['date'],
-        groupSeparatorBuilder: (groupValue) => Padding(
-          padding: EdgeInsets.only(bottom: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
+      return Flexible(
+        child: GroupedListView(
+          elements: _data,
+          groupBy: (item) => item['date'],
+          groupSeparatorBuilder: (groupValue) => Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Flexible(
                   child: Row(
                     children: [
                       Expanded(
@@ -147,53 +128,52 @@ class _notifications extends State<Notifications> with TickerProviderStateMixin 
                       ),
                     ],
                   ),
-              ),
-            ],
-          ) ,
-          // Text('${groupValue}'),
-        ),
-        itemBuilder: (context,item){
-          return Card(
-            elevation: 1.0,
-            // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-            child: Container(
-              padding: EdgeInsets.all(8),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 8,
-                    child: Container(
-                      padding: EdgeInsets.only(bottom:8),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left:8, right: 8),
-                            child: Text(item['deskripsi'],
+                ),
+              ],
+            ) ,
+            // Text('${groupValue}'),
+          ),
+          itemBuilder: (context,item){
+            return Card(
+              elevation: 1.0,
+              // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+              child: Container(
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      flex: 8,
+                      child: Container(
+                        padding: EdgeInsets.only(bottom:8),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left:8, right: 8),
+                              child: Text(item['deskripsi'],
                                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          );
-        },
-        groupComparator: (group1, group2) => group1.compareTo(group2),
-        itemComparator: (item1, item2) => item1['title'].compareTo(item2['title']),
-        useStickyGroupSeparators: true,
-        floatingHeader: false,
-        order: GroupedListOrder.ASC,
-      ),
-    ),
-    );
+            );
+          },
+          groupComparator: (group1, group2) => group1.compareTo(group2),
+          itemComparator: (item1, item2) => item1['title'].compareTo(item2['title']),
+          useStickyGroupSeparators: true,
+          floatingHeader: false,
+          order: GroupedListOrder.ASC,
+        ),
+      );
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:siup/home/HomeMenu.dart';
 import 'package:siup/home/exdash.dart';
 import '../home/GridHomePage.dart';
+import 'package:siup/account/account.dart';
 import 'package:siup/dashboard/dashboard.dart';
 import 'package:siup/config/config.dart';
+import 'package:siup/main.dart';
 
 String username='';
 
@@ -26,16 +29,20 @@ class _HomePageState extends State<homePage> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Account',
-      style: optionStyle,
-    ),
+  final List<Widget> _children = [
+    HomeMenu(),
+    Account(),
   ];
+  // static const List<Widget> _widgetOptions = <Widget>[
+  //   Text(
+  //     'Index 0: Home',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 2: Account',
+  //     style: optionStyle,
+  //   ),
+  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -46,87 +53,37 @@ class _HomePageState extends State<homePage> {
     @override
     Widget build(BuildContext context) {
 
-      return Scaffold(
+      return new WillPopScope(
+        onWillPop: (){
+          Navigator.pushReplacement(context,
+              new MaterialPageRoute(builder: (context) => Login())
+            /*homePage(username: username,)*/
+          );
+        },
+        child: Scaffold(
         backgroundColor: Colors.white,
-        body: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 30,
-            ),
-
-            Padding(
-              padding: EdgeInsets.only(left: 16, right: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SizedBox(
-                        height: 4,
-                      ),
-
-                      // Text('Orang tua dari : ', style: TextStyle(fontSize: 18.0),),
-
-                      Row(
-                        children: <Widget>[
-                      //     Text('$username', style: TextStyle(fontSize: 18.0),),
-
-                          Container(
-                            child: Image.asset('image/logosiup.png', width: 80, height: 80),
-                          ),
-                        ],
-                      ),
-
-                      // RaisedButton(
-                      //   child: Text("Log OUt"),
-                      //   onPressed: (){
-                      //     // Navigator.pushReplacementNamed(context,'/Login');
-                      //     print('homepage');
-                      //   },
-                      // ),
-
-                    ],
-                  ),
-                  Positioned(
-                    right: 0.0,
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 5),
-                      child: IconButton(
-                        icon: Icon(Icons.circle_notifications),
-                        iconSize: 40.0,
-                        color: Colors.amber,
-                        onPressed: (){
-                          Navigator.pushReplacementNamed(context, '/Notifications');
-                        },
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            GridHomePage()
-          ],
-        ),
+        body: _children[_selectedIndex],
         bottomNavigationBar: new Theme(data: Theme.of(context).copyWith(
           canvasColor: Colors.white,
           primaryColor: Colors.black,
         ), child: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
+              icon: _selectedIndex==0?Image.asset("image/home/user_icon.png", scale: 17, color: Colors.grey,)
+                                     :Image.asset("image/home/user_icon.png", scale: 17, color: Colors.blue,),
               label: 'Account',
             ),
           ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: Colors.amber,
+          selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.grey,
           onTap: _onItemTapped,
-          ),
+          currentIndex: _selectedIndex,
+        ),
+        ),
         ),
       );
     }
