@@ -56,7 +56,7 @@ class _HomePageState extends State<homePage> {
       return new WillPopScope(
         onWillPop: (){
           Navigator.pushReplacement(context,
-              new MaterialPageRoute(builder: (context) => Login())
+              new MaterialPageRoute(builder: (context) => homePage())
             /*homePage(username: username,)*/
           );
         },

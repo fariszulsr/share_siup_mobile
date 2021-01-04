@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:siup/presensi/PresensiPage.dart';
 import '../presensi/GridPresensiPage.dart';
 import 'package:siup/account/account.dart';
 import 'package:siup/main.dart';
@@ -7,21 +8,20 @@ import 'package:siup/home/HomePage.dart';
 
 String username='';
 
-class PresensiPage extends StatefulWidget {
-  // final String results;
-  final String username;
-  PresensiPage({this.username});
+class DetailPresensiPage extends StatefulWidget {
+  final String deskripsi;
+  // final String username;
+  DetailPresensiPage({this.deskripsi});
   @override
-  _presensiPage createState() => _presensiPage(username: username);
+  _detailPresensiPage createState() => _detailPresensiPage(deskripsi:deskripsi);
 }
 
-class _presensiPage extends State<PresensiPage> {
+class _detailPresensiPage extends State<DetailPresensiPage> {
 
-  final String username;
+  final String deskripsi;
+  // final String username;
   // final List<String> results;
-  _presensiPage({this.username});
-  var _currencies = ['Profil', 'Log out'];
-  var _currentItemSelected = ['Profil'];
+  _detailPresensiPage({String this.deskripsi});
 
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
@@ -30,16 +30,6 @@ class _presensiPage extends State<PresensiPage> {
     homePage(),
     Account(),
   ];
-  // static const List<Widget> _widgetOptions = <Widget>[
-  //   Text(
-  //     'Index 0: Home',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 2: Account',
-  //     style: optionStyle,
-  //   ),
-  // ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -53,7 +43,7 @@ class _presensiPage extends State<PresensiPage> {
     return new WillPopScope(
       onWillPop: (){
         Navigator.pushReplacement(context,
-            new MaterialPageRoute(builder: (context) => homePage())
+            new MaterialPageRoute(builder: (context) => PresensiPage())
           /*homePage(username: username,)*/
         );
       },
@@ -66,13 +56,18 @@ class _presensiPage extends State<PresensiPage> {
             centerTitle: false,
             title: Column(
               children: [
-                Text("Absensi", style: TextStyle(color: Colors.blue),),
+                Text(deskripsi, style: TextStyle(color: Colors.blue),),
               ],
             ),
             backgroundColor: Colors.white,
             leading: GestureDetector(
               onTap: (){
-                Navigator.pushReplacementNamed(context, '/HomePage');
+                // Navigator.pushReplacementNamed(context, '/DetailPresensiPage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (BuildContext context) => PresensiPage(username:username)),
+                );
               },
               child: Icon(Icons.arrow_back_ios, color: Colors.blue,),
             ),
@@ -93,7 +88,7 @@ class _presensiPage extends State<PresensiPage> {
         ),
       body: Column(
         children: <Widget>[
-          GridPresensiPage()
+          // GridPresensiPage()
         ],
       ),
     ),

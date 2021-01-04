@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:siup/account/account.dart';
 import 'package:siup/home/HomePage.dart';
 import 'package:crypto/crypto.dart';
@@ -10,14 +10,14 @@ import 'package:siup/schedule/SchedulePage.dart';
 import 'package:siup/notification/notifications.dart';
 import 'package:postgres/postgres.dart';
 import 'package:siup/presensi/PresensiPage.dart';
-// import 'package:siup/config/config.dart';
-// import 'package:format_indonesia/format_indonesia.dart';
+import 'package:siup/presensi/DetailPresensiPage.dart';
 
 void main() {
   runApp(MyApp());
 }
 
 String username='';
+String password='';
 int id = 0;
 
 class MyApp extends StatelessWidget {
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/Notifications' : (BuildContext context)=> new Notifications(username: username,),
         '/Account' : (BuildContext context)=> new Account(),
         '/PresensiPage' : (BuildContext context)=> new PresensiPage(),
+        '/DetailPresensiPage' : (BuildContext context)=> new DetailPresensiPage(),
       },
     );
   }
@@ -130,6 +131,7 @@ class _LoginState extends State<Login> {
           }
           setState(() {
             username= username;
+            id=id;
           });
         }
       }

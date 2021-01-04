@@ -115,10 +115,17 @@ class _account extends State<Account> with TickerProviderStateMixin {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(left:8, right: 8),
-                              child: Text(item['deskripsi'],
-                                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if(item['id']==4){
+                                    Navigator.pushReplacementNamed(context, '/Login');
+                                  }
+                                },
+                                child: Text(item['deskripsi'],
+                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                ),
                               ),
                             ),
                           ],

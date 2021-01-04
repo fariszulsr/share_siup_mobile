@@ -1,10 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:siup/home/HomePage.dart';
 import 'package:format_indonesia/format_indonesia.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
+import 'package:siup/presensi/DetailPresensiPage.dart';
 
 String username = '';
+String title='';
 
 class GridPresensiPage extends StatefulWidget {
 
@@ -44,136 +48,178 @@ class _gridPresensiPage extends State<GridPresensiPage> with TickerProviderState
   List _data = [
     {
       'id':1,
-      'title':'test1',
-      'author':'Faris 1',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-12-07')).format("MMMM y"),
-      'group':'Android',
-      'deskripsi': 'Masa Perkuliahan Semester Ganjil',
-      'image':'https://picsum.photos/200/300?random=1'
+      'deskripsi': 'Berpikir Kritis',
+      'presentasi': '90',
     },
     {
       'id':2,
-      'title':'test2',
-      'author':'Faris 2',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-11-07')).format("MMMM y"),
-      'group':'IOS',
-      'deskripsi': 'Masa Perkuliahan Semester Genap',
-      'image':'https://picsum.photos/200/300?random=2'
+      'deskripsi': 'Kalkulus I',
+      'presentasi': '76',
     },
     {
       'id':3,
-      'title':'test3',
-      'author':'Faris 3',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-12-10')).format("MMMM y"),
-      'group':'Android',
-      'deskripsi': 'Masa Perwalian Semester Ganjil',
-      'image':'https://picsum.photos/200/300?random=3'
+      'deskripsi': 'Fisika Dasar I',
+      'presentasi': '90',
     },
     {
       'id':4,
-      'title':'test4',
-      'author':'Faris 4',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-11-10')).format("MMMM y"),
-      'group':'IOS',
-      'deskripsi': 'Masa Perwalian Semester Genap',
-      'image':'https://picsum.photos/200/300?random=4'
+      'deskripsi': 'Tata Tulis Karya Ilmiah',
+      'presentasi': '90',
     },
     {
       'id':5,
-      'title':'test5',
-      'author':'Faris 5',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-12-17')).format("MMMM y"),
-      'group':'android',
-      'deskripsi': 'Masa Pengisian KRS Semester Ganjil',
-      'image':'https://picsum.photos/200/300?random=5'
+      'deskripsi': 'Kimia Dasar I',
+      'presentasi': '90',
     },
     {
       'id':6,
-      'title':'test6',
-      'author':'Faris 6',
+      'title':'Mata Kuliah',
       'date':Waktu(DateTime.parse('2020-11-17')).format("MMMM y"),
-      'group':'IOS',
-      'deskripsi': 'Masa Pengisian KRS Semester Genap',
-      'image':'https://picsum.photos/200/300?random=5'
+      'deskripsi': 'Bahasa Inggris I',
+      'presentasi': '90',
+    },
+    {
+      'id':7,
+      'title':'Mata Kuliah',
+      'date':Waktu(DateTime.parse('2020-11-17')).format("MMMM y"),
+      'deskripsi': 'Pengantar Tekonolgi dan Bisnis Energi',
+      'presentasi': '90',
     },
   ];
+  var your_number_of_rows = 7;
+
+  get deskripsi => null;
 
   @override
   Widget build(BuildContext context) {
 
       return Flexible(
-        child: GroupedListView(
-          elements: _data,
-          groupBy: (item) => item['date'],
-          groupSeparatorBuilder: (groupValue) => Padding(
-            padding: EdgeInsets.only(bottom: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Flexible(
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: Container(
-                          // margin: EdgeInsets.only(right: 8),
-                          color: Colors.blue,
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10),
-                            child: Text(groupValue,textAlign: TextAlign.start,
-                              style: TextStyle(fontSize: 18, color: Colors.white,fontWeight: FontWeight.bold),),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ) ,
-            // Text('${groupValue}'),
-          ),
-          itemBuilder: (context,item){
-            return Card(
-              elevation: 1.0,
-              // margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              child: Container(
-                padding: EdgeInsets.all(8),
+        flex: 1,
+        child:
+      //   ListView(children: <Widget>[
+      //     Column(
+      //       children: [
+      //         Container(
+      //           padding: EdgeInsets.only(top: 10, bottom: 10, left: 20),
+      //           alignment: Alignment.centerLeft,
+      //           child: Text('Semester Ganjil 2020/2021', style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),),
+      //         ),
+      //         DataTable(
+      //           headingRowColor: MaterialStateColor.resolveWith((states) => Colors.blue),
+      //           // dataRowHeight: (MediaQuery.of(context).size.height - 200) / your_number_of_rows,
+      //           columns: [
+      //             DataColumn(
+      //                 label: Text('Mata Kuliah', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white))),
+      //             DataColumn(
+      //                 label: Text('Kehadiran (%)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white))),
+      //           ],
+      //           rows: [
+      //             DataRow(cells: [
+      //               DataCell(Text('Berpikir Kritis', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('90', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Kalkulus I', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('76', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Fisika Dasar I', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('90', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Tata Tulis Karya Ilmiah', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('90', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Kimia Dasar I', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('90', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Bahasa Inggris I', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('90', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //             DataRow(cells: [
+      //               DataCell(Text('Pengantar Teknologi dan Bisnis Energi', style: TextStyle(fontSize: 18))),
+      //               DataCell(Text('60', style: TextStyle(fontSize: 18))),
+      //             ]),
+      //           ],
+      //         ),
+      //       ],
+      //     ),
+      //   ],
+      // ),
+
+        Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(top: 10, bottom: 10, left: 20),
+                alignment: Alignment.centerLeft,
+                child: Text('Semester Ganjil 2020/2021', style: GoogleFonts.lato(textStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),),),
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: 10, left: 10),
+                // alignment: Alignment.centerLeft,
+                color: Colors.blue,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Expanded(
-                      flex: 8,
-                      child: Container(
-                        padding: EdgeInsets.only(bottom:8),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(left:8, right: 8),
-                              child: Text(item['deskripsi'],
-                                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    Expanded(child: Text('Mata Kuliah', style:  TextStyle(height: 3.0, fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))),
+                    Expanded(child: Text('Kehadiran (%)', style:  TextStyle(height: 3.0, fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white))),
                   ],
                 ),
               ),
-            );
-          },
-          groupComparator: (group1, group2) => group1.compareTo(group2),
-          itemComparator: (item1, item2) => item1['title'].compareTo(item2['title']),
-          useStickyGroupSeparators: true,
-          floatingHeader: false,
-          order: GroupedListOrder.ASC,
-        ),
+
+              Expanded(
+                child:Container(
+                  child: ListView.builder(
+                    itemCount: _data == null ? 0 : _data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () {
+                          if(_data[index]['id']!=null){
+                            // Navigator.pushReplacementNamed(context, '/DetailPresensiPage');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (BuildContext context) => DetailPresensiPage(deskripsi: _data[index]['deskripsi'])),
+                            );
+                            print(_data[index]['deskripsi']);
+                          }
+                          // else if(_data[index]['id']==2){
+                          //   // Navigator.pushReplacementNamed(context, '/DetailPresensiPage');
+                          //   Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (BuildContext context) => DetailPresensiPage(deskripsi: _data[index]['deskripsi'])),
+                          //   );
+                          //   print(_data[index]['deskripsi']);
+                          // }
+
+                        },
+                        child: ListTile( //return new ListTile(
+                          title: Row(
+                            children: <Widget>[
+                              Expanded(child: Text(_data[index]["deskripsi"], style: TextStyle(fontSize: 18),)),
+                              Expanded(child: Padding(padding: EdgeInsets.only(left: 10), child: Text(_data[index]["presentasi"], style: TextStyle(fontSize: 18)),)),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
       );
   }
 }
