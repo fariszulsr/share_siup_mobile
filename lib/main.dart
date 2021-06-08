@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+// import 'dart:io';
 import 'dart:convert';
 // import 'package:http/http.dart' as http;
 import 'package:siup/account/account.dart';
@@ -21,17 +22,8 @@ String password='';
 int id = 0;
 
 class MyApp extends StatelessWidget {
-  // get results => results;
 
   @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     title: 'Login',
-  //     debugShowCheckedModeBanner: false,
-  //     theme: ThemeData(primarySwatch: Colors.blue, primaryColor: Colors.black),
-  //     home: Login(),
-  //   );
-  // }
   Widget build(BuildContext context) {
     return new MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -56,6 +48,20 @@ class Login extends StatefulWidget {
   _LoginState createState() => _LoginState();
 }
 
+// class DataLogin {
+//   final int userId;
+//   final String token;
+//   final int roleId;
+//   DataLogin({this.token, this.roleId, this.userId});
+//   factory DataLogin.fromJson(Map<String, dynamic> json) {
+//     return DataLogin(
+//       userId: json['id_pengguna'],
+//       token: json['token'],
+//       roleId: json['id_role'],
+//     );
+//   }
+// }
+
 class _LoginState extends State<Login> {
   TextEditingController user=new TextEditingController();
   TextEditingController pass=new TextEditingController();
@@ -64,6 +70,7 @@ class _LoginState extends State<Login> {
 
   String msg='';
   String salt_test='';
+  // ignore: deprecated_member_use
   List<int> cekId = new List<int>();
   int roleCek = 0;
 
@@ -75,15 +82,42 @@ class _LoginState extends State<Login> {
     // var hmac = new Hmac(sha512, key);
     // var encodePassword = hmac.convert(message);
 
+    // final loginData = await http.post("https://siup.universitaspertamina.ac.id/mobile/v1/login",
+    //     headers: {
+    //       'Accept':'application/json'
+    //     },
+    //     body: {
+    //       "username": user.text,
+    //       "password": pass.text,
+    //     }
+    //   );
+    // var datauser = jsonDecode(loginData.body);
+    // final response = await http.get("https://siup.universitaspertamina.ac.id/mobile/v1",
+    //   headers: {HttpHeaders.authorizationHeader: datauser['token']},
+    // );
+    // print(datauser);
+    // if(loginData.body.isNotEmpty){
+    //   print(1);
+    // }else{
+    //   print(2);
+    // }
+
+    // final response = await http.get("https://siup.universitaspertamina.ac.id/mobile/v1",
+    //   headers: {HttpHeaders.authorizationHeader: datauser['token']},
+    // );
+    // final datauserToken = jsonDecode(response.body);
+
+
     // final response = await http.post("http://10.0.2.2/flutter_siup/login.php", body: {
     //   "username": user.text,
-    //   "password": encodePassword.toString(),
+    //   "password": pass.text,
     // });
 
     // final getSalt = await http.get("http://10.0.2.2/flutter_siup/getSalt.php");
     // var salt = json.encode(getSalt);
 
-    final connect = PostgreSQLConnection("10.0.2.2", 5432, "siup", username: 'postgres', password: 'root');
+    /**//**//**/
+    final connect = PostgreSQLConnection("10.0.2.2", 5432, "siup_parent", username: 'postgres', password: 'root');
     await connect.open();
     List<List<dynamic>> salt = await connect.query("SELECT salt FROM tmst_pengguna WHERE username = @username",substitutionValues: {"username":user.text});
     for (final row in salt){
@@ -104,14 +138,14 @@ class _LoginState extends State<Login> {
     }
 
     for (final row in cekId) {
-      if (row == 9){
+      if (row == 1){
         roleCek = 1;
       }
       else{
         roleCek = 0;
       }
     }
-    print(datauser.length);
+    print(datauser);
 
     if(datauser.length==0){
       setState(() {
@@ -119,6 +153,7 @@ class _LoginState extends State<Login> {
       });
     }else{
       if(datauser!=null){
+        print(roleCek);
         if(roleCek == 0){
           setState(() {
             msg="User bukan merupakan orangtua mahasiswa";
@@ -146,7 +181,7 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       // appBar: AppBar(centerTitle: true, title: Text("SIUP Parents"),),
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       body: Container(
         child: Center(
           child: Column(
@@ -229,12 +264,13 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.circular(18.0),
                 ),
                 minWidth: 300.0,
+                // ignore: deprecated_member_use
                 child: RaisedButton(
                   child: Text("Log In",
                       style: TextStyle(fontSize: 20, color: Colors.white)),
                   onPressed: (){
                     _login();
-                    print('salt');
+                    // print('salt');
                   },
                 ),
               ),
